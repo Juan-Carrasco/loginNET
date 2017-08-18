@@ -9,41 +9,30 @@ function MasterRow(props) {
 		{props.number}	{props.value}					
 		</div>
 		);
-}
-
-function MasterGrid(props){
-	var numrows = props.list.length;
-	var rows = [];
-	for(let i=0; i < numrows; i++) {
-		rows.push(<MasterRow value={props.list[i].Nombre} number={i} onClick={() => props.onRowClick(props.list[i].Id)}/>);
 	}
-	return <div> {rows} </div>;
-}
 
-
-
-class Master extends React.Component{
-
-	constructor(){
-		super();
-		this.state = {
-			lista :"",
-			previousModificador :0
+	function MasterGrid(props){
+		var numrows = props.list.length;
+		var rows = [];
+		for(let i=0; i < numrows; i++) {
+			rows.push(<MasterRow value={props.list[i].Nombre} number={i} onClick={() => props.onRowClick(props.list[i].Id)}/>);
 		}
+		return <div> {rows} </div>;
 	}
 
-	componentDidMount(){
-		$.ajax({
-			url:"http://localhost:57470/api/Personas",
-			method:"GET"})
-		.done(this.binding)
-		.fail(function(data){
-			alert("ERROR EN EL GET ALL");
-		});
-	}
 
-	componentDidUpdate(){
-		if(this.state.previousModificador!=0){
+
+	class Master extends React.Component{
+
+		constructor(){
+			super();
+			this.state = {
+				lista :"",
+				previousModificador :0
+			}
+		}
+
+		componentDidMount(){
 			$.ajax({
 				url:"http://localhost:57470/api/Personas",
 				method:"GET"})
@@ -52,53 +41,64 @@ class Master extends React.Component{
 				alert("ERROR EN EL GET ALL");
 			});
 		}
-	}
 
-	shouldComponentUpdate(){
-		if(this.props.modificador > this.state.previousModificador){
-			this.setState({previousModificador:this.props.modificador});
-			return true;
+		componentDidUpdate(){
+			if(this.state.previousModificador!=0){
+				$.ajax({
+					url:"http://localhost:57470/api/Personas",
+					method:"GET"})
+				.done(this.binding)
+				.fail(function(data){
+					alert("ERROR EN EL GET ALL");
+				});
+			}
 		}
-		else{
-			return false;
+
+		shouldComponentUpdate(){
+			if(this.props.modificador > this.state.previousModificador){
+				this.setState({previousModificador:this.props.modificador});
+				return true;
+			}
+			else{
+				return false;
+			}
 		}
+		binding = (data)=>{
+			this.setState({lista:data});
+		}
+		render(){
+			return(
+				<div style={{width:"50%"}} id="maestro">
+				<MasterGrid  key = {this.props.modificador} list={this.state.lista} onRowClick= {(x)=>this.props.onItemClick(x)}/>
+				</div>
+				)
+		}
+
+
 	}
-	binding = (data)=>{
-		this.setState({lista:data});
-	}
-	render(){
-		return(
-			<div style={{width:"50%"}} id="maestro">
-			<MasterGrid  key = {this.props.modificador} list={this.state.lista} onRowClick= {(x)=>this.props.onItemClick(x)}/>
-			</div>
-			)
-	}
 
+	class Formulario extends React.Component{
 
-}
+		constructor(){
+			super();
+			this.state = {
+				actual:{
+					name:"",
+					apellidos:"",
+					edad:""
 
-class Formulario extends React.Component{
-
-	constructor(){
-		super();
-		this.state = {
-			actual:{
-				name:"",
-				apellidos:"",
-				edad:""
-
-			},	
-			previous:{
-				name:"",
-				apellidos:"",
-				edad:""
-			},
-			id:2,
-			modificador:1
+				},	
+				previous:{
+					name:"",
+					apellidos:"",
+					edad:""
+				},
+				id:2,
+				modificador:1
+				
+			}
 			
 		}
-		
-	}
 
 	baseURL = "http://localhost:57470/api/Personas/";
 
@@ -217,41 +217,41 @@ class Formulario extends React.Component{
 			<Master modificador ={this.state.modificador} onItemClick ={this.chooseDetail}/>
 			</div>
 			)
-	}
-
-	checkForm = (evt) =>{
-		switch (evt.target.id) {
-			case "nameInput":
-			var name = evt.target.value;
-			if(name.length <= 20){
-
-				this.setState({actual:{name:name,apellidos:this.state.actual.apellidos,edad:this.state.actual.edad}});
-			}				
-			break;
-			case "apellidoInput":
-			var apellidos = evt.target.value;
-			if(apellidos.length <= 20){
-
-				this.setState({actual:{name:this.state.actual.name, apellidos:apellidos, edad:this.state.actual.edad}});
-			}
-			break;
-			case "edadInput":
-			var edad = evt.target.value;
-			if(edad>=0 && edad<=150){
-
-				this.setState({actual:{name:this.state.actual.name, apellidos:this.state.actual.apellidos, edad:edad}});
-			}
-			break;
-			default:
-			// code...
-			break;
 		}
+
+		checkForm = (evt) =>{
+			switch (evt.target.id) {
+				case "nameInput":
+				var name = evt.target.value;
+				if(name.length <= 20){
+
+					this.setState({actual:{name:name,apellidos:this.state.actual.apellidos,edad:this.state.actual.edad}});
+				}				
+				break;
+				case "apellidoInput":
+				var apellidos = evt.target.value;
+				if(apellidos.length <= 20){
+
+					this.setState({actual:{name:this.state.actual.name, apellidos:apellidos, edad:this.state.actual.edad}});
+				}
+				break;
+				case "edadInput":
+				var edad = evt.target.value;
+				if(edad>=0 && edad<=150){
+
+					this.setState({actual:{name:this.state.actual.name, apellidos:this.state.actual.apellidos, edad:edad}});
+				}
+				break;
+				default:
+				// code...
+				break;
+			}
+		}
+
 	}
 
-}
 
-
-ReactDOM.render(<Formulario />, document.getElementById('root'));
+	ReactDOM.render(<Formulario />, document.getElementById('root'));
 
 ////////////////////////
 /* FALTA/DUDAS

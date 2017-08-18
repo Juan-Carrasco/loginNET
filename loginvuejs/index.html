@@ -1,11 +1,52 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <title>loginvuejs</title>
-  </head>
-  <body>
-    <div id="app"></div>
-    <!-- built files will be auto injected -->
-  </body>
+<head>
+	<title>Master-Detail</title>
+	<script src="https://unpkg.com/vue"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="styles.css">
+</head>
+<body>
+
+	<div id="Master-Detail">
+		<div id="Master" class="master-div">
+			<h1>MASTER</h1>
+
+
+			<div :class=computedClass(item.Id) v-for="(item, index) in lista" >
+				<p class = "nameParagraph">{{item.Nombre}}</p>
+				<div class ="rowButtonsContainer" >
+					<button class="masterButton" v-on:click="readDetail(item.Id)" ><img class="buttonImage" src="images/read.png"/></button>
+					<button class="masterButton" v-on:click="updateDetail(item.Id)" ><img class="buttonImage" src="images/update.png"/></button>
+					<button class="masterButton" v-on:click="deleteItem(item.Id)" ><img class="buttonImage" src="images/delete.png"/></button>
+				</div>
+			</div>
+			<button class="masterButton buttonNew" v-on:click="newDetail()" ><img class="buttonImage" src="images/new.png"/></button>
+
+		</div>
+		<div class="detail-div" id="Detail">
+			<h1>DETAIL</h1>
+			<div id ="Formulario"  class="Formulario">
+				<label>Nombre:</label>
+				<input :disabled="read" v-model="currentPerson.name" type="text" id="nombreInput" placeholder="Nombre"></input>
+			</br>
+			<label>Apellido:</label>
+			<input :disabled="read" type="text" v-model="currentPerson.surname" id="apellidoInput" placeholder="Apellido"></input>
+		</br>
+		<label>Edad</label>
+		<input :disabled="read" type="number" v-model="currentPerson.age" id="edadInput" placeholder="Edad"></input>
+		<div class = "buttonContainer">
+			<button v-bind:disabled="disabledOnNoChange"  id="acceptButton" v-on:click="buttonAccept">ACEPTAR</button>
+			<button :disabled="read"  id="limpiarButton" v-on:click="buttonClean">LIMPIAR</button>
+			<button :disabled="disabledOnNoChange"  id="resetButton" v-on:click="buttonReset">RESET</button>
+		</div>
+	</div>
+</div>
+</div>
+<script src ="index.js"></script>
+</div>
+</body>
 </html>
+
+
+

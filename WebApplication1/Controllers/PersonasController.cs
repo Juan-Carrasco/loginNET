@@ -14,10 +14,7 @@ using WebApplication1.Services;
 
 namespace WebApplication1.Controllers
 {
-    [EnableCors(origins: "http://localhost:3000", headers: "*", methods: "*")]
-
-   
-
+    [EnableCors(origins: "http://localhost:3000, http://localhost:8080", headers: "*", methods: "*")]
 
     public class PersonasController : ApiController
     {

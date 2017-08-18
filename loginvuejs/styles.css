@@ -1,0 +1,43 @@
+div.master-div-row {
+	border-size:1px;
+	border-style:solid;
+	border-color:black;
+	margin:10px;
+	padding:3px;
+}
+div.master-div {
+	width:50%;
+	float: left;
+}
+div.detail-div {
+	width:50%;
+	float:right;
+}
+div.Formulario {
+	background-color: #E6E6E6;
+	padding : 15px;
+}
+div.selected {
+	background-color: #81F7F3;
+}
+div.rowButtonsContainer {
+	display: inline-block;
+	float:right;
+}
+button.buttonNew {
+	float: right
+}
+p.nameParagraph {
+	display:inline-block;
+}
+
+button.masterButton {
+	height:50px;
+	width:50px;
+	align-content: center;
+}
+img.buttonImage {
+	height:30px;
+	width:30px	;
+
+}
