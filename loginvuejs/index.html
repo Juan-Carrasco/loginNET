@@ -9,11 +9,16 @@
 <body>
 
 	<div id="Master-Detail">
-		<div id="Master" class="master-div">
-			<h1>MASTER</h1>
+	<div id = "Menu" >
+			<a class ="anchorMenu" v-on:click="chooseMenu('Personas')">Personas</a>
+			<a class ="anchorMenu" v-on:click="chooseMenu('Animales')">Animales</a>
 
+		</div>
+		<div id="Master" class="master-div">
+			<h1>MASTER: {{menuChoice}}</h1>
 
 			<div :class=computedClass(item.Id) v-for="(item, index) in lista" >
+				<p class = "nameParagraph">{{index}}    </p>
 				<p class = "nameParagraph">{{item.Nombre}}</p>
 				<div class ="rowButtonsContainer" >
 					<button class="masterButton" v-on:click="readDetail(item.Id)" ><img class="buttonImage" src="images/read.png"/></button>
@@ -33,12 +38,12 @@
 			<label>Apellido:</label>
 			<input :disabled="read" type="text" v-model="currentPerson.surname" id="apellidoInput" placeholder="Apellido"></input>
 		</br>
-		<label>Edad</label>
+		<label>Edad:</label>
 		<input :disabled="read" type="number" v-model="currentPerson.age" id="edadInput" placeholder="Edad"></input>
 		<div class = "buttonContainer">
 			<button v-bind:disabled="disabledOnNoChange"  id="acceptButton" v-on:click="buttonAccept">ACEPTAR</button>
 			<button :disabled="read"  id="limpiarButton" v-on:click="buttonClean">LIMPIAR</button>
-			<button :disabled="disabledOnNoChange"  id="resetButton" v-on:click="buttonReset">RESET</button>
+			<button v-bind:disabled="disabledOnNoChange"  id="resetButton" v-on:click="buttonReset">RESET</button>
 		</div>
 	</div>
 </div>

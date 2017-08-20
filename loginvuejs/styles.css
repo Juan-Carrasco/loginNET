@@ -6,11 +6,11 @@ div.master-div-row {
 	padding:3px;
 }
 div.master-div {
-	width:50%;
+	width:70%;
 	float: left;
 }
 div.detail-div {
-	width:50%;
+	width:25%;
 	float:right;
 }
 div.Formulario {
@@ -40,4 +40,8 @@ img.buttonImage {
 	height:30px;
 	width:30px	;
 
+}
+
+a.anchorMenu{
+	display:inline-block;
 }
